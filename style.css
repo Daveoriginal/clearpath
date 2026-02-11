@@ -588,25 +588,139 @@ a:hover {
 }
 
 
+
+
 @media (max-width: 600px) {
-    body {
-   width: 100%;
+   .left-col h3 {
+    color: orange;
+    font-size: 1.2rem;
 
 } 
+.left-col p {
+    font-size: 0.8rem;
+    color: #fff;
+}
+.right-col h3 {
+    font-size: 1.0rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
+}
+.right-col p {
+    color: orange;
+    font-size: 0.7rem;
+    font-family: 'Times New Roman', Times, serif;
+}
+.container button {
+    font-size: 1.1em;
 }
 
+.card h1 {
+    font-size: 1rem;
+}
+.card h2 {
+    font-size: 1rem;
+}
+.card h3 {
+    font-size: 1rem;
+}
+.step1 h1 {
+    color: darkblue;
+    font-size: 1.5em;   
+}
+.step1 p {
+    font-size: 1rem;
+
+}
+.step2 h1 {
+    color: darkblue;
+    font-size: 1.3em;
+}
+.step2 p {
+    font-size: 0.8rem;
+}
+}
+
+
+/*screen adjustment*/
 @media (min-width: 601px) {
-    body {
-   width: 100%;
+  .left-col h3 {
+    color: orange;
+    font-size: 1.2rem;
+} 
+.left-col h3 {
+    color: orange;
+    font-size: 1.2rem;
 
 } 
+.left-col p {
+    font-size: 0.8rem;
+    color: #fff;
+}
+.right-col h3 {
+    font-size: 1.0rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
+}
+.right-col p {
+    color: orange;
+    font-size: 0.7rem;
+    font-family: 'Times New Roman', Times, serif;
+}
+.container button {
+    font-size: 1.1em;
+}
+
+.card h1 {
+    font-size: 1rem;
+}
+.card h2 {
+    font-size: 1rem;
+}
+.card h3 {
+    font-size: 1rem;
+}
+
 }
 
 /*<600px, 768px,992px, 1200px*/
 @media (min-width: 768px) {
-    body {
-   width: 100%;
+   .left-col h3 {
+    color: orange;
+    font-size: 1.5rem;
 
 } 
+.left-col h3 {
+    color: orange;
+    font-size: 1.2rem;
+
+} 
+.left-col p {
+    font-size: 0.8rem;
+    color: #fff;
+}
+.right-col h3 {
+    font-size: 1.0rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: white;
+}
+.right-col p {
+    color: orange;
+    font-size: 0.7rem;
+    font-family: 'Times New Roman', Times, serif;
+}
+.container button {
+    font-size: 1.1em;
+}
+
+.card h1 {
+    font-size: 1rem;
+}
+.card h2 {
+    font-size: 1rem;
+}
+.card h3 {
+    font-size: 1rem;
+}
+
 }
 
