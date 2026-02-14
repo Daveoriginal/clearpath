@@ -607,10 +607,11 @@ footer p{
 /* Close */
 .close-btn {
   position: absolute;
-  top: 10px;
+  top: 15px;
   right: 15px;
   font-size: 25px;
   cursor: pointer;
+    z-index: 10000;
 }
 
 /*RESPONSIVE DESIGN*/
@@ -625,9 +626,16 @@ footer p{
         font-size:2.2rem;
     }
 
-    .counters{
-        flex-direction:column;
+    .counter-box {
+        flex: 1 1 45%;
     }
+    .counter-box h2 {
+        font-size:20px;
+    }
+    .counter-box p {
+        font-size:15px;
+    }
+    
     .hero {
         height: 80vh;
     }
@@ -645,3 +653,4 @@ footer p{
     }
 
 }
+
