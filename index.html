@@ -20,56 +20,69 @@
         <div class="slide">
             <h1>MENU</h1>
             <ul>
-                <li><a href="#"><i class="fas fa-tv"></i>Dashboard</a></li>
-                <li><a href="#"><i class="fas fa-house"></i>Home</a></li>
+                 <li><a href="#"><i class="fas fa-house"></i>Home</a></li>
                 <li><a href="#"><i class="fas fa-address-book"></i>Portfolio</a></li>
                 <li><a href="#"><i class="fas fa-heart"></i>Saved</a></li>
                 <li><a href="#"><i class="fas fa-folder"></i>classes</a></li>
+                <li><a href="#"><i class="fas fa-address-book"></i>Practice</a></li>
+
 
             </ul>
         </div>
     </label>
      <section class="hero">
+        <div class="overlay"></div>
+        <div class="content">
         <h1><strong>CLEARPATH ACADEMY</strong></h1>
         <P>Learn clearly, succeed confidently</P>
-       <a> <button type="submit">Start journey</button></a>
+       <a><button type="submit">Start journey</button></a>
+       </div>
      </section>
 
-     <div class="container">
-        <div class="left-col">
+     <div class="container reveal">
+
+    <div class="why-image">
+        <img src="english.jpeg" alt="Students learning">
+    </div>
+
+    <div class="why-content">
+
         <h3>WHY CHOOSE US?</h3>
-        <p>Designed to make learning clearer, calmer and focuses
+
+        <p>
+            Designed to make learning clearer, calmer and focused
             on real exam success.
         </p>
-                <button>Learn more</button>
-     </div>
-     
-     <div class="right-col">
-        <ol>
-        <li><h3>Syllabus-Based lessons</h3>
-        <p><em>Study only what matters for your exams</em></p>
-        </li>
 
-        <li>
-            <h3>Simple, clear teaching</h3>
-            <p><em>Topics explained step by step, without confusion</em></p>
-        </li>
+        <div class="features">
 
-        <li>
-            <h3>Exam-Focused Practice</h3>
-            <p><em>Questions designed to match real exam standards</em></p>
-        </li>
+            <div class="feature">
+                <h4>Syllabus-Based Lessons</h4>
+                <p>Study only what matters for your exams.</p>
+            </div>
 
-        <li>
-            <h3>Learn Anytime, Anywhere - L.A.A. Rule</h3>
-            <p><em>Access lessons on your phone or computer</em></p>
-        </li>
-        </ol>
+            <div class="feature">
+                <h4>Simple, Clear Teaching</h4>
+                <p>Step-by-step explanations without confusion.</p>
+            </div>
 
+            <div class="feature">
+                <h4>Exam-Focused Practice</h4>
+                <p>Questions designed to match real exam standards.</p>
+            </div>
 
-     </div>
-     
-     </div>
+            <div class="feature">
+                <h4>Learn Anytime, Anywhere - L.A.A Rule</h4>
+                <p>Access lessons on phone or computer.</p>
+            </div>
+
+        </div>
+
+        <button>Learn More</button>
+
+    </div>
+
+</div>
      <h3 class="subject">Available subjects</h3>
      <section class="card">
 
@@ -122,15 +135,103 @@
     <div class="step4">
         <h1>STEP FOUR</h1>
         <p>Track Progress<br>
-        See your improvement and stay moteivated.</p>
+        See your improvement and stay motivated.</p>
     </div>
 
     </div>
      
-     <footer>
+     <section class="counters reveal">
+    <div class="counter-box">
+        <div class="counter" data-target="500">0</div>
+        <p>Students Taught</p>
+    </div>
 
-     </footer>
-    
+    <div class="counter-box">
+        <div class="counter" data-target="1200">0</div>
+        <p>Lessons Delivered</p>
+    </div>
+
+    <div class="counter-box">
+        <div class="counter" data-target="98">0</div>
+        <p>% Exam Success Rate</p>
+    </div>
+
+    <div class="counter-box">
+        <div class="counter" data-target="24">0</div>
+        <p>Hour Learning Access</p>
+    </div>
+</section>
+
+<section class="testimonials reveal">
+    <h2>What Our Students Say</h2>
+
+    <div class="testimonial-box">
+        <p>
+            “CLEARPATH ACADEMY made Physics finally make sense.
+            The step-by-step explanations helped me score an A.”
+        </p>
+        <h4>- Daniel, WAEC Student</h4>
+    </div>
+
+    <div class="testimonial-box">
+        <p>
+            “The exam-style questions are exactly like what came out
+            in my exams. Highly recommended!”
+        </p>
+        <h4>- Grace, JAMB Candidate</h4>
+    </div>
+</section>
+
+<footer>
+    <h2>CLEARPATH ACADEMY</h2>
+    <p>Learn clearly. Succeed confidently.</p>
+
+    <p style="margin-top:20px;">
+        © 2026 CLEARPATH ACADEMY | All Rights Reserved
+    </p>
+</footer>
+
+    <script>
+
+// Scroll Reveal
+window.addEventListener("scroll", function() {
+    const reveals = document.querySelectorAll(".reveal");
+
+    reveals.forEach(reveal => {
+        const windowHeight = window.innerHeight;
+        const revealTop = reveal.getBoundingClientRect().top;
+        const revealPoint = 100;
+
+        if(revealTop < windowHeight - revealPoint){
+            reveal.classList.add("active");
+        }
+    });
+});
+
+// Counter Animation
+const counters = document.querySelectorAll('.counter');
+
+counters.forEach(counter => {
+    counter.innerText = '0';
+
+    const updateCounter = () => {
+        const target = +counter.getAttribute('data-target');
+        const c = +counter.innerText;
+
+        const increment = target / 200;
+
+        if(c < target){
+            counter.innerText = `${Math.ceil(c + increment)}`;
+            setTimeout(updateCounter, 10);
+        } else {
+            counter.innerText = target;
+        }
+    };
+
+    updateCounter();
+});
+
+</script>
+
 </body>
-
 </html> 
