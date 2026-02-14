@@ -191,6 +191,32 @@
     </p>
 </footer>
 
+<!-- Promo Popup Overlay -->
+<div class="promo-overlay" id="promoOverlay">
+  <div class="promo-popup">
+
+    <span class="close-btn" id="closePopup">&times;</span>
+
+    <div class="promo-banner">
+      <img src="promo.jpg" alt="Promo Banner">
+      <div class="discount-badge">50% OFF</div>
+    </div>
+
+    <div class="promo-content">
+      <h2>Limited Time Offer 🎉</h2>
+      <p>Enroll today and enjoy our exclusive discount.</p>
+
+      <div class="countdown">
+        Offer ends in:
+        <span id="countdownTimer">00:00:00</span>
+      </div>
+
+      <a href="#" class="promo-btn">Enroll Now</a>
+    </div>
+
+  </div>
+</div>
+
     <script>
 
 // Scroll Reveal
@@ -231,6 +257,43 @@ counters.forEach(counter => {
     updateCounter();
 });
 
+</script>
+
+<script>
+const overlay = document.getElementById("promoOverlay");
+const closeBtn = document.getElementById("closePopup");
+const countdown = document.getElementById("countdownTimer");
+
+// 24 hour check
+const lastShown = localStorage.getItem("promoLastShown");
+const now = new Date().getTime();
+const oneDay = 24 * 60 * 60 * 1000;
+
+if (!lastShown || now - lastShown > oneDay) {
+    overlay.classList.add("active");
+    localStorage.setItem("promoLastShown", now);
+}
+
+// Close popup
+closeBtn.addEventListener("click", () => {
+    overlay.classList.remove("active");
+});
+
+// Countdown (24 hours)
+let timeLeft = 24 * 60 * 60;
+
+setInterval(() => {
+    let hours = Math.floor(timeLeft / 3600);
+    let minutes = Math.floor((timeLeft % 3600) / 60);
+    let seconds = timeLeft % 60;
+
+    countdown.textContent =
+        `${String(hours).padStart(2, '0')}:` +
+        `${String(minutes).padStart(2, '0')}:` +
+        `${String(seconds).padStart(2, '0')}`;
+
+    if (timeLeft > 0) timeLeft--;
+}, 1000);
 </script>
 
 </body>
