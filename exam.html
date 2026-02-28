@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TURORING SITE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="exam/style.css">
+</head>
+<body>
+
+    <label>
+        <input type="checkbox">
+        <div class="toggle">
+            <span class="top_line common"></span>
+            <span class="middle_line common"></span>
+            <span class="bottom_line common"></span>
+
+        </div>
+        <div class="slide">
+            <h1>MENU</h1>
+            <ul>
+                 <li><a href="index.html"><i class="fas fa-house"></i>Home</a></li>
+                <li><a href="portfolio.html"><i class="fas fa-address-book"></i>Portfolio</a></li>
+                <li><a href="news.html"><i class="fas fa-heart"></i>News</a></li>
+                <li><a href="#"><i class="fas fa-folder"></i>classes</a></li>
+                <li><a href="exam.html"><i class="fas fa-address-book"></i>Practice</a></li>
+
+
+            </ul>
+        </div>
+    </label> 
+
+
+<div class="subjects-section">
+  <h2>Practice Subjects</h2>
+  <h2>Practice Subjects</h2>
+  <div class="cards-grid" id="subjectCards"></div>
+</div>
+
+<div class="cbt-container" id="cbtContainer" style="display:none;">
+
+  <div class="cbt-header">
+    <h2 id="subjectTitle">Subject</h2>
+    <div class="timer">Time Left: <span id="time">00:00</span></div>
+  </div>
+
+  <div class="cbt-body">
+
+    <div class="question-section">
+      <div id="question-number"></div>
+      <div id="question-text"></div>
+
+      <div id="options"></div>
+
+      <div class="navigation-buttons">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
+      </div>
+      <div style="margin-top:10px;">
+        <button id="backBtn">Back to Subjects
+          
+        </button>
+      </div>
+    </div>
+
+    <div class="question-grid" id="questionGrid"></div>
+
+  </div>
+
+</div>
+
+<div class="result-screen" id="resultScreen" style="display:none;">
+  <h2>Exam Completed</h2>
+  <p id="scoreText"></p>
+  <button id="resultBack">Back to Subjects</button>
+</div>
+
+<script>
+const subjects = [
+  {
+    id: 'physics',
+    title: 'Physics',
+    duration: 300, // seconds
+    questions: [
+      { question: "What is the SI unit of force?", options: ["Newton", "Joule", "Pascal", "Watt"], answer: 0 },
+      { question: "Speed is defined as?", options: ["Distance × Time", "Distance / Time", "Time / Distance", "Force × Distance"], answer: 1 }
+    ]
+  },
+  {
+    id: 'maths',
+    title: 'Maths',
+    duration: 600,
+    questions: [
+      { question: "What is 2 + 2?", options: ["3","4","5","22"], answer: 1 },
+      { question: "What is 5 × 6?", options: ["11","30","56","35"], answer: 1 },
+      { question: "What is the square root of 16?", options: ["2","4","8","6"], answer: 1 }
+    ]
+  }
+];
+
+let selectedSubject = null;
+let currentQuestion = 0;
+let userAnswers = [];
+let timeLeft = 0;
+let timerInterval = null;
+
+const subjectCards = document.getElementById('subjectCards');
+const cbtContainer = document.getElementById('cbtContainer');
+const subjectTitle = document.getElementById('subjectTitle');
+const questionText = document.getElementById('question-text');
+const optionsContainer = document.getElementById('options');
+const questionNumber = document.getElementById('question-number');
+const questionGrid = document.getElementById('questionGrid');
+const resultScreen = document.getElementById('resultScreen');
+const scoreText = document.getElementById('scoreText');
+
+function renderSubjectCards() {
+  subjectCards.innerHTML = '';
+  subjects.forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'subject-card';
+    card.innerHTML = `<h3>${s.title}</h3><p>Duration: ${Math.floor(s.duration/60)} min</p><p>Questions: ${s.questions.length}</p>`;
+    card.onclick = () => openSubject(i);
+    subjectCards.appendChild(card);
+  });
+}
+
+function openSubject(index) {
+  selectedSubject = subjects[index];
+  currentQuestion = 0;
+  userAnswers = [];
+  timeLeft = selectedSubject.duration;
+  subjectTitle.innerText = selectedSubject.title + ' CBT Practice';
+  document.querySelector('.subjects-section').style.display = 'none';
+  cbtContainer.style.display = 'block';
+  resultScreen.style.display = 'none';
+  loadQuestion(currentQuestion);
+  updateGrid();
+  startTimer();
+}
+
+function backToSubjects() {
+  clearInterval(timerInterval);
+  cbtContainer.style.display = 'none';
+  resultScreen.style.display = 'none';
+  document.querySelector('.subjects-section').style.display = 'block';
+}
+
+function loadQuestion(index) {
+  const q = selectedSubject.questions[index];
+  questionNumber.innerText = `Question ${index + 1} of ${selectedSubject.questions.length}`;
+  questionText.innerText = q.question;
+  optionsContainer.innerHTML = '';
+  q.options.forEach((option, i) => {
+    const btn = document.createElement('button');
+    btn.innerText = option;
+    btn.onclick = () => selectAnswer(i);
+    if (userAnswers[index] === i) btn.classList.add('selected');
+    optionsContainer.appendChild(btn);
+  });
+}
+
+function selectAnswer(optionIndex) {
+  userAnswers[currentQuestion] = optionIndex;
+  // update option button styles immediately
+  Array.from(optionsContainer.children).forEach((b, i) => {
+    b.classList.toggle('selected', i === optionIndex);
+  });
+  updateGrid();
+}
+
+function updateGrid() {
+  questionGrid.innerHTML = '';
+  selectedSubject.questions.forEach((_, i) => {
+    const btn = document.createElement('button');
+    btn.innerText = i + 1;
+    if (userAnswers[i] !== undefined) btn.classList.add('answered');
+    btn.onclick = () => { currentQuestion = i; loadQuestion(i); };
+    questionGrid.appendChild(btn);
+  });
+}
+
+document.getElementById('nextBtn').onclick = () => {
+  if (currentQuestion < selectedSubject.questions.length - 1) {
+    currentQuestion++;
+    loadQuestion(currentQuestion);
+  } else {
+    finishExam();
+  }
+};
+
+document.getElementById('prevBtn').onclick = () => {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    loadQuestion(currentQuestion);
+  }
+};
+
+document.getElementById('backBtn').onclick = backToSubjects;
+document.getElementById('resultBack').onclick = backToSubjects;
+
+function finishExam() {
+  clearInterval(timerInterval);
+  let score = 0;
+  selectedSubject.questions.forEach((q, i) => {
+    if (userAnswers[i] === q.answer) score++;
+  });
+  cbtContainer.style.display = 'none';
+  resultScreen.style.display = 'block';
+  scoreText.innerText = `You scored ${score} out of ${selectedSubject.questions.length}`;
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  const timerElement = document.getElementById('time');
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timerElement.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+renderSubjectCards();
+</script>
+
+</body>
+</html>
