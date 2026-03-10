@@ -1013,7 +1013,10 @@ footer p{
 
     .why-content h3{
         font-size: 1.8rem;
+        margin-bottom:10px;
+
     }
+ 
 
     .reason h4{
         font-size: 1.8rem;
@@ -1038,9 +1041,12 @@ footer p{
         font-size: 14px;
     }
     .hero .content {
-        position: relative;
-        top: 0;
-    }
+    position: relative;
+    top: -50%; 
+}
+.content button {
+    transform: translateY(50%);
+}
     
     .hero p {
         font-size: 1rem;
