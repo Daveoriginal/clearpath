@@ -22,7 +22,7 @@
         <div class="slide">
             <h1>MENU</h1>
             <ul>
-                 <li><a href="#"><i class="fas fa-house"></i>Home</a></li>
+                 <li><a heref="#"><i class="fas fa-house"></i>Home</a></li>
                 <li><a href="portfolio.html"><i class="fas fa-address-book"></i>Portfolio</a></li>
                 <li><a href="news.html"><i class="fas fa-heart"></i>News</a></li>
                 <li><a href="index.html"><i class="fas fa-folder"></i>classes</a></li>
@@ -197,40 +197,56 @@
 
 <section class="FAQ">
     <h2>Frequently Asked Questions</h2>
+    <p class="faq-subtitle">Find answers to common questions about our academy</p>
 
-    <div class="FAQ-wrapper">
-        <button class="arrow left">&#10094;</button>
-            <div class="FAQ-viewport">
-                <div class="FAQ-track" id="FAQtrack">
-            <div class="FAQ-card">
-                <h3>Do you prepare students for WAEC and JAMB?</h3>
-                    <p>Yes, our curriculum aligns with major examination syllabi
-                        and questioning patterns.
-                    </p>
-                </div>    
-                    <div class="FAQ-card">
-                        <h3>Are mock examinations included?</h3>
-                            <p>Yes. Students undergo times mock exams under real exam 
-                                conditions.
-                            </p>
-                    </div>
-
-                    <div class="FAQ-card">
-                        <h3>Are class sizes limited?</h3>
-                        <p>Yes, we maintain structured class sizes to ensure 
-                            personalized attention.
-                        </p>
-                    </div>
-
-                    <div class="FAQ-card">
-                        <h3>Do you offer SAT preparation?</h3>
-                        <p>Yes, our SAT program focuses on critical reasoning and timed 
-                            practice.
-                        </p>
-                    </div>
+    <div class="faq-container">
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Do you prepare students for WAEC and JAMB?</span>
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <div class="faq-answer">
+                <p>Yes, our curriculum aligns with major examination syllabi and questioning patterns. We provide comprehensive coverage of all exam requirements.</p>
+            </div>
         </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Are mock examinations included?</span>
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <div class="faq-answer">
+                <p>Yes. Students undergo timed mock exams under real exam conditions to build confidence and familiarity with the format.</p>
+            </div>
         </div>
-        <button class="arrow right">&#10095;</button>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Are class sizes limited?</span>
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <div class="faq-answer">
+                <p>Yes, we maintain structured class sizes to ensure personalized attention and better learning outcomes for each student.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Do you offer SAT preparation?</span>
+                <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <div class="faq-answer">
+                <p>Yes, our SAT program focuses on critical reasoning and timed practice with strategies that work specifically for the SAT format.</p>
+            </div>
+        </div>
     </div>
 </section>
      <section class="counters reveal">
@@ -397,35 +413,27 @@ setInterval(() => {
 </script>
 
 <script>
-const track = 
-document.getElementById("FAQtrack");
-    const cards = 
-    document.querySelectorAll(".FAQ-card");
-    const nextBtn = 
-    document.querySelector(".arrow.right");
-    const prevBtn = 
-    document.querySelector(".arrow.left");
+// FAQ Accordion functionality
+const faqItems = document.querySelectorAll('.faq-item');
 
-    let index=0;
-    function updateSlider() {
-        const cardWidth = 
-        document.querySelector(".FAQ-viewport").offsetWidth;
-        track.style.transform = `translateX(-${index * cardWidth}px)`;
-    }
-
-    nextBtn.addEventListener("click", () => {
-        if (index < cards.length - 1) {
-            index++;
-           updateSlider()
+faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    
+    question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all other items
+        faqItems.forEach(otherItem => {
+            otherItem.classList.remove('active');
+        });
+        
+        // Toggle current item
+        if (!isActive) {
+            item.classList.add('active');
         }
     });
-    prevBtn.addEventListener("click", () => {
-        if (index > 0) {
-            index--;
-            updateSlider();
-        }
-    });
-    window.addEventListener("resize", updateSlider);
+});
 </script>
 
 <script>
@@ -452,5 +460,4 @@ document.getElementById("FAQtrack");
 </script>
 
 </body>
-
 </html> 

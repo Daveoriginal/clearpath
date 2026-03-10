@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TURORING SITE</title>
+    <title>TUTORING SITE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="style copy 2.css">
 </head>
@@ -33,9 +33,15 @@
 
 
 <div class="subjects-section">
-  <h2>Practice Subjects</h2>
-  <h2>Practice Subjects</h2>
+  <h2>Legendary 1st in Course Subjects</h2>
   <div class="cards-grid" id="subjectCards"></div>
+</div>
+
+<div class="name-input" id="nameInput" style="display:none; text-align: center; padding: 50px; background-color: #f9f9f9; border-radius: 10px; margin: 20px auto; max-width: 400px;">
+  <h2 style="color: #333; margin-bottom: 20px;">Enter Your Name</h2>
+  <input type="text" id="studentName" placeholder="Your Name" style="padding: 10px; font-size: 16px; width: 80%; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px;">
+  <br>
+  <button id="startExamBtn" style="padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Start Exam</button>
 </div>
 
 <div class="cbt-container" id="cbtContainer" style="display:none;">
@@ -49,6 +55,7 @@
 
     <div class="question-section">
       <div id="question-number"></div>
+      <div id="question-subject"></div>
       <div id="question-text"></div>
 
       <div id="options"></div>
@@ -56,6 +63,7 @@
       <div class="navigation-buttons">
         <button id="prevBtn">Previous</button>
         <button id="nextBtn">Next</button>
+        <button id="submitBtn" style="display:none; background-color: #f44336; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Submit</button>
       </div>
       <div style="margin-top:10px;">
         <button id="backBtn">Back to Subjects
@@ -66,35 +74,37 @@
 
     <div class="question-grid" id="questionGrid"></div>
 
-  </div>
-
-</div>
-
-<div class="result-screen" id="resultScreen" style="display:none;">
-  <h2>Exam Completed</h2>
-  <p id="scoreText"></p>
-  <button id="resultBack">Back to Subjects</button>
 </div>
 
 <script>
 const subjects = [
   {
-    id: 'physics',
-    title: 'Physics',
-    duration: 300, // seconds
+    id: 'legendary',
+    title: 'Legendary 1st in Course',
+    duration: 7200, // 2 hours in seconds
     questions: [
-      { question: "What is the SI unit of force?", options: ["Newton", "Joule", "Pascal", "Watt"], answer: 0 },
-      { question: "Speed is defined as?", options: ["Distance × Time", "Distance / Time", "Time / Distance", "Force × Distance"], answer: 1 }
-    ]
-  },
-  {
-    id: 'maths',
-    title: 'Maths',
-    duration: 600,
-    questions: [
-      { question: "What is 2 + 2?", options: ["3","4","5","22"], answer: 1 },
-      { question: "What is 5 × 6?", options: ["11","30","56","35"], answer: 1 },
-      { question: "What is the square root of 16?", options: ["2","4","8","6"], answer: 1 }
+      // Biology
+      { subject: 'Biology', question: "What is the basic unit of life?", options: ["Cell", "Atom", "Molecule", "Tissue"], answer: 0 },
+      { subject: 'Biology', question: "Which organelle is known as the powerhouse of the cell?", options: ["Nucleus", "Mitochondria", "Ribosome", "Golgi apparatus"], answer: 1 },
+      { subject: 'Biology', question: "What process do plants use to make food?", options: ["Respiration", "Photosynthesis", "Transpiration", "Digestion"], answer: 1 },
+      { subject: 'Biology', question: "What is the largest organ in the human body?", options: ["Heart", "Liver", "Skin", "Brain"], answer: 2 },
+      // Chemistry
+      { subject: 'Chemistry', question: "What is the chemical symbol for water?", options: ["H2O", "CO2", "O2", "NaCl"], answer: 0 },
+      { subject: 'Chemistry', question: "What is the atomic number of carbon?", options: ["6", "8", "12", "14"], answer: 0 },
+      { subject: 'Chemistry', question: "Which element is represented by the symbol 'Fe'?", options: ["Iron", "Gold", "Silver", "Copper"], answer: 0 },
+      { subject: 'Chemistry', question: "What is the pH of water?", options: ["7", "1", "14", "0"], answer: 0 },
+      // English
+      { subject: 'English', question: "What is the plural of 'child'?", options: ["Childs", "Children", "Childes", "Childrens"], answer: 1 },
+      { subject: 'English', question: "Which word is a synonym for 'happy'?", options: ["Sad", "Joyful", "Angry", "Tired"], answer: 1 },
+      { subject: 'English', question: "What is the past tense of 'run'?", options: ["Ran", "Runned", "Running", "Runs"], answer: 0 },
+      { subject: 'English', question: "What is the synonym of 'big'?", options: ["Small", "Large", "Tiny", "Short"], answer: 1 },
+      { subject: 'English', question: "Choose the correct sentence.", options: ["He go to school.", "He goes to school.", "He going to school.", "He went to school."], answer: 1 },
+      { subject: 'English', question: "What is the opposite of 'hot'?", options: ["Cold", "Warm", "Wet", "Dry"], answer: 0 },
+      // Maths
+      { subject: 'Maths', question: "What is 2 + 2?", options: ["3","4","5","22"], answer: 1 },
+      { subject: 'Maths', question: "What is 5 × 6?", options: ["11","30","56","35"], answer: 1 },
+      { subject: 'Maths', question: "What is the square root of 16?", options: ["2","4","8","6"], answer: 1 },
+      { subject: 'Maths', question: "What is 10 ÷ 2?", options: ["5", "20", "15", "2"], answer: 0 }
     ]
   }
 ];
@@ -109,11 +119,15 @@ const subjectCards = document.getElementById('subjectCards');
 const cbtContainer = document.getElementById('cbtContainer');
 const subjectTitle = document.getElementById('subjectTitle');
 const questionText = document.getElementById('question-text');
+const questionSubject = document.getElementById('question-subject');
 const optionsContainer = document.getElementById('options');
 const questionNumber = document.getElementById('question-number');
 const questionGrid = document.getElementById('questionGrid');
-const resultScreen = document.getElementById('resultScreen');
-const scoreText = document.getElementById('scoreText');
+const submitBtn = document.getElementById('submitBtn');
+const nameInput = document.getElementById('nameInput');
+const studentNameInput = document.getElementById('studentName');
+
+let studentName = '';
 
 function renderSubjectCards() {
   subjectCards.innerHTML = '';
@@ -121,9 +135,14 @@ function renderSubjectCards() {
     const card = document.createElement('div');
     card.className = 'subject-card';
     card.innerHTML = `<h3>${s.title}</h3><p>Duration: ${Math.floor(s.duration/60)} min</p><p>Questions: ${s.questions.length}</p>`;
-    card.onclick = () => openSubject(i);
+    card.onclick = () => openNameInput();
     subjectCards.appendChild(card);
   });
+}
+
+function openNameInput() {
+  document.querySelector('.subjects-section').style.display = 'none';
+  nameInput.style.display = 'block';
 }
 
 function openSubject(index) {
@@ -134,7 +153,6 @@ function openSubject(index) {
   subjectTitle.innerText = selectedSubject.title + ' CBT Practice';
   document.querySelector('.subjects-section').style.display = 'none';
   cbtContainer.style.display = 'block';
-  resultScreen.style.display = 'none';
   loadQuestion(currentQuestion);
   updateGrid();
   startTimer();
@@ -143,14 +161,17 @@ function openSubject(index) {
 function backToSubjects() {
   clearInterval(timerInterval);
   cbtContainer.style.display = 'none';
-  resultScreen.style.display = 'none';
+  nameInput.style.display = 'none';
   document.querySelector('.subjects-section').style.display = 'block';
 }
 
 function loadQuestion(index) {
   const q = selectedSubject.questions[index];
   questionNumber.innerText = `Question ${index + 1} of ${selectedSubject.questions.length}`;
+  questionSubject.innerHTML = `<strong>${q.subject}</strong>`;
   questionText.innerText = q.question;
+  submitBtn.style.display = (index === selectedSubject.questions.length - 1) ? 'inline-block' : 'none';
+  nextBtn.style.display = (index === selectedSubject.questions.length - 1) ? 'none' : 'inline-block';
   optionsContainer.innerHTML = '';
   q.options.forEach((option, i) => {
     const btn = document.createElement('button');
@@ -185,7 +206,11 @@ document.getElementById('nextBtn').onclick = () => {
   if (currentQuestion < selectedSubject.questions.length - 1) {
     currentQuestion++;
     loadQuestion(currentQuestion);
-  } else {
+  }
+};
+
+document.getElementById('submitBtn').onclick = () => {
+  if (confirm("Are you sure you want to submit?")) {
     finishExam();
   }
 };
@@ -198,17 +223,41 @@ document.getElementById('prevBtn').onclick = () => {
 };
 
 document.getElementById('backBtn').onclick = backToSubjects;
-document.getElementById('resultBack').onclick = backToSubjects;
+
+document.getElementById('startExamBtn').onclick = () => {
+  studentName = studentNameInput.value.trim();
+  if (!studentName) {
+    alert('Please enter your name');
+    return;
+  }
+  nameInput.style.display = 'none';
+  openSubject(0);
+};
 
 function finishExam() {
   clearInterval(timerInterval);
-  let score = 0;
+  let correct = 0;
   selectedSubject.questions.forEach((q, i) => {
-    if (userAnswers[i] === q.answer) score++;
+    if (userAnswers[i] === q.answer) correct++;
   });
-  cbtContainer.style.display = 'none';
-  resultScreen.style.display = 'block';
-  scoreText.innerText = `You scored ${score} out of ${selectedSubject.questions.length}`;
+  const percentage = (correct / selectedSubject.questions.length) * 100;
+  const score = Math.round((percentage / 100) * 500);
+  const body = `Name: ${studentName}\nYour Legendary 1st in Course score: ${score} out of 500\nCorrect answers: ${correct} out of ${selectedSubject.questions.length}`;
+  fetch('http://localhost:3000/send-score', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: studentName, score, correct, total: selectedSubject.questions.length })
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert('Score sent successfully!');
+    setTimeout(() => backToSubjects(), 1000);
+  })
+  .catch(error => {
+    alert('Failed to send score. Please check if the server is running.');
+    console.error('Error:', error);
+    setTimeout(() => backToSubjects(), 1000);
+  });
 }
 
 function startTimer() {
@@ -216,9 +265,10 @@ function startTimer() {
   const timerElement = document.getElementById('time');
   timerInterval = setInterval(() => {
     timeLeft--;
-    const minutes = Math.floor(timeLeft / 60);
+    const hours = Math.floor(timeLeft / 3600);
+    const minutes = Math.floor((timeLeft % 3600) / 60);
     const seconds = timeLeft % 60;
-    timerElement.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    timerElement.innerText = `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       finishExam();
